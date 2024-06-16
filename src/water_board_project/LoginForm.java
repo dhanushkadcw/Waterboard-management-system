@@ -4,6 +4,13 @@
  */
 package water_board_project;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author User
@@ -15,6 +22,22 @@ public class LoginForm extends javax.swing.JFrame {
      */
     public LoginForm() {
         initComponents();
+        Connect();
+    }
+    
+    Connection con;
+    PreparedStatement pst;
+    
+    public void Connect(){
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/waterboard_project", "root", "Dhanush#1");
+            System.out.println("Connected");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Water_board_project.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Water_board_project.class.getName()).log(Level.SEVERE, null, ex);
+        }  
     }
 
     /**
@@ -140,8 +163,11 @@ public class LoginForm extends javax.swing.JFrame {
         password.setText("");
     }//GEN-LAST:event_passwordMouseClicked
 
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Water_board_project.current_username = username.getText();
         UserDashboard dashboard = new UserDashboard();
+        dashboard.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -177,6 +203,7 @@ public class LoginForm extends javax.swing.JFrame {
             public void run() {
                 new LoginForm().setVisible(true);
             }
+            
         });
     }
 

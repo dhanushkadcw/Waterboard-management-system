@@ -13,28 +13,16 @@ import java.util.logging.Logger;
  */
 public class Water_board_project {
 
+    
+    public static String current_username;
+    
     public Water_board_project(){
-        Connect();
+        
     }
     public static void main(String[] args) {
         
     }
     
-    Connection con;
-    PreparedStatement pst;
     
-    public void Connect(){
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/waterboard_project", "root", "Dhanush#1");
-            System.out.println("Connected");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Water_board_project.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(Water_board_project.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-    }
     
 }
