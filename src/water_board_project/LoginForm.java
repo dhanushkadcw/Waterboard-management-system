@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,7 +31,7 @@ public class LoginForm extends javax.swing.JFrame {
     
     public void Connect(){
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost/waterboard_project", "root", "Dhanush#1");
             System.out.println("Connected");
         } catch (ClassNotFoundException ex) {
@@ -166,6 +167,22 @@ public class LoginForm extends javax.swing.JFrame {
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Water_board_project.current_username = username.getText();
+        try {
+            pst = con.prepareStatement("select userID from login_details where Username=? ");
+            String Username = username.getText();
+            pst.setString(1, Username);
+            java.sql.ResultSet rs1 = pst.executeQuery();
+            if(rs1.next()==false){
+                JOptionPane.showMessageDialog(this, "User not found");
+                System.exit(0);
+            }else{
+                Water_board_project.current_userID = rs1.getInt("userID");
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         UserDashboard dashboard = new UserDashboard();
         dashboard.setVisible(true);
         dispose();
